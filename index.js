@@ -14,7 +14,14 @@ request('http://urbandictionary.com').then(function (html) {
       method: 'POST',
       uri: 'https://hooks.slack.com/services/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',
       body: {
-        "text": 'http://www.urbandictionary.com/define.php?term=Catch+these+thumbs&defid=10932054'
+        "attachment": [{
+          "fallback": data.definition,
+          "color": "#e86222",
+          "author_name": data.author,
+          "title": data.word,
+          "title_link": data.permalink,
+          "text": `${data.definition} \n\n _${data.example}_`,
+        }]
       },
       json: true
     });
