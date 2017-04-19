@@ -13,14 +13,13 @@ request('http://urbandictionary.com').then(function (html) {
     request({
       method: 'POST',
       uri: 'https://hooks.slack.com/services/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',
-      body: {
-        "attachment": [{
+    body: {
+        "attachments": [{
           "fallback": data.definition,
           "color": "#e86222",
-          "author_name": data.author,
           "title": data.word,
           "title_link": data.permalink,
-          "text": `${data.definition} \n\n _${data.example}_`,
+          "text": `${data.definition} \n\n "${data.example}"`,
         }]
       },
       json: true
