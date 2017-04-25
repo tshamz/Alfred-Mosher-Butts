@@ -2,6 +2,14 @@ const Q = require('q');
 const cheerio = require('cheerio');
 const request = require('request-promise');
 
+const prependAndAppendUnderscore = function (string) {
+  let lines = string.split('\n');
+  let prefixedAndSufixedLines = lines.map(function (line) {
+    return `_${line.replace('\r', '')}_`;
+  });
+  return prefixedAndSufixedLines.join('\n');
+};
+
 const getWord = function () {
   return Q.Promise(function (resolve, reject, notify) {
     request('http://urbandictionary.com')
@@ -12,7 +20,7 @@ const getWord = function () {
     })
     .catch(function (err) {
       reject(new Error(err));
-    })
+    });
   });
 };
 
@@ -25,7 +33,7 @@ const getDefinition = function (word) {
     })
     .catch(function (err) {
       reject(new Error(err));
-    })
+    });
   });
 };
 
@@ -40,7 +48,7 @@ const postToSlack = function (data) {
           "color": "#e86222",
           "title": data.word,
           "title_link": data.permalink,
-          "text": `${data.definition} \n\n _${data.example}_`,
+          "text": `${data.definition} \n\n ${prependAndAppendUnderscore(data.example)}`,
           "mrkdwn_in": ["text"]
         }]
       },
@@ -51,7 +59,7 @@ const postToSlack = function (data) {
     })
     .catch(function () {
       reject(new Error(err));
-    })
+    });
   });
 };
 
