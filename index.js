@@ -4,7 +4,9 @@ const request = require('request-promise');
 
 const prependAndAppendUnderscore = function (string) {
   let lines = string.split('\n');
-  let prefixedAndSufixedLines = lines.map(function (line) {
+  let prefixedAndSufixedLines = lines.filter(function (line) {
+    return line !== '';
+  }).map(function (line) {
     return `_${line.replace('\r', '')}_`;
   });
   return prefixedAndSufixedLines.join('\n');
