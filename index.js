@@ -43,7 +43,7 @@ const postToSlack = function (data) {
   return Q.Promise(function (resolve, reject, notify) {
     request({
       method: 'POST',
-      uri: 'https://hooks.slack.com/services/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',
+      uri: process.env.slack_webhook,
       body: {
         "attachments": [{
           "fallback": data.definition,
